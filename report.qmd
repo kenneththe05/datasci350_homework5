@@ -1,0 +1,108 @@
+---
+title: "World Development Indicators Analysis (2022)"
+author: "Kenneth He"
+date: today
+format:
+  html:
+    toc: true
+    number-sections: true
+  pdf:
+    documentclass: article
+bibliography: references.bib
+execute:
+  echo: false
+---
+
+This report analyses a sample of the World Development Indicators (WDI) dataset for 2022. The data source is the World Bank WDI database [@worldbank_wdi].
+
+```{python}
+#| label: setup
+#| warning: false
+#| message: false
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df = pd.read_csv("wdi.csv")
+df_clean = df[[
+    "gdp_per_capita",
+    "life_expectancy",
+    "measles_immunisation_rate"
+]].dropna()
+```
+## Exploratory Data Analysis
+
+We focus on three key indicators for 2022: GDP per capita, life expectancy, and inflation rate. These variables capture economic development, health outcomes, and macroeconomic stability.
+```{python}
+#| label: eda-summary
+#| echo: true
+
+df[["gdp_per_capita","life_expectancy","inflation_rate"]].describe()
+```
+```{python}
+#| label: eda-correlation
+#| echo: true
+
+df[["gdp_per_capita","life_expectancy","inflation_rate"]].corr()
+```
+The summary statistics show that GDP per capita is highly dispersed, with large variation across countries. Life expectancy varies within a narrower range, while inflation exhibits strong right-skewness due to several extreme outliers.
+
+The correlation matrix indicates a positive relationship between GDP per capita and life expectancy, suggesting that higher-income countries tend to experience better health outcomes. Inflation appears weakly related to the other two indicators.
+
+## Visualizing Key Relationships
+
+The following plots illustrate the patterns identified in the exploratory analysis.
+```{python}
+#| label: fig-development-health
+#| fig-label: fig-development-health
+#| fig-cap: "GDP per capita vs Life Expectancy, colored by measles immunisation rate (2022)."
+
+plt.figure()
+
+scatter = plt.scatter(
+    df_clean["gdp_per_capita"],
+    df_clean["life_expectancy"],
+    c=df_clean["measles_immunisation_rate"]
+)
+
+plt.xlabel("GDP per capita")
+plt.ylabel("Life expectancy")
+plt.title("Economic Development and Health Outcomes")
+
+plt.colorbar(scatter, label="Measles immunisation rate")
+plt.show()
+```
+```{python}
+#| label: fig-inflation
+#| fig-label: fig-inflation
+#| fig-cap: "Distribution of inflation rates across countries (2022)."
+
+plt.figure()
+
+plt.hist(df["inflation_rate"].dropna(), bins=30)
+
+plt.xlabel("Inflation rate")
+plt.ylabel("Number of countries")
+plt.title("Inflation Rate Distribution (2022)")
+
+plt.show()
+```
+
+Figure @fig-development-health visually confirms the positive association between income and life expectancy identified in the correlation analysis. 
+
+Figure @fig-inflation illustrates the right-skewed distribution of inflation, consistent with the presence of extreme outliers observed in the summary statistics.
+
+## Summary of Key Indicators
+
+| Indicator          | Main Observation |
+|--------------------|------------------|
+| GDP per capita     | Highly dispersed across countries |
+| Life expectancy    | Positively associated with GDP |
+| Inflation rate     | Right-skewed with extreme outliers |
+
+Table @tbl-key-stats summarises the main statistical patterns identified in the exploratory analysis.
+
+The positive relationship between income and life expectancy is consistent with classic findings in the development literature [@preston1975].
+
+## References

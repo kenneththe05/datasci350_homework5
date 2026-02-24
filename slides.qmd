@@ -1,0 +1,68 @@
+---
+title: "WDI Snapshot (2022)"
+author: "Kenneth He"
+date: today
+format:
+  revealjs:
+    theme: dark
+    transition: fade
+    slide-number: true
+bibliography: references.bib
+execute:
+  echo: false
+---
+
+## Overview
+
+- Dataset: World Development Indicators (2022) [@worldbank_wdi]
+- Indicators used:
+  - GDP per capita
+  - Life expectancy
+  - Inflation rate
+
+## Key EDA Results
+
+- GDP per capita varies widely across countries.
+- Life expectancy has a narrower spread and tends to increase with GDP.
+- Inflation is right-skewed with a few extreme outliers.
+
+## Visual 1: GDP and Life Expectancy
+
+```{python}
+#| label: fig-slide-dev
+#| fig-cap: "GDP per capita vs Life expectancy (2022)."
+#| echo: false
+
+import pandas as pd
+import matplotlib.pyplot as plt
+df = pd.read_csv("wdi.csv")
+
+
+plt.figure()
+plt.scatter(df["gdp_per_capita"], df["life_expectancy"])
+plt.xlabel("GDP per capita")
+plt.ylabel("Life expectancy")
+plt.title("GDP and Life Expectancy")
+plt.show()
+```
+
+## Visual 2: Inflation Distribution
+```{python}
+#| label: fig-slide-infl
+#| fig-cap: "Inflation distribution (2022)."
+#| echo: false
+
+plt.figure()
+plt.hist(df["inflation_rate"].dropna(), bins=30)
+plt.xlabel("Inflation rate")
+plt.ylabel("Number of countries")
+plt.title("Inflation Rate Distribution (2022)")
+plt.show()
+```
+
+## Conclusion
+
+- GDP per capita and life expectancy show a strong positive relationship.
+- Gains in life expectancy are larger at lower income levels and begin to level off among high-income countries.
+- Inflation is generally moderate across countries, but a small number experience extreme volatility.
+- Overall, the analysis highlights clear links between economic development and health outcomes, alongside substantial global inequality.
