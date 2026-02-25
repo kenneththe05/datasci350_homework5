@@ -40,7 +40,7 @@ We focus on three key indicators for 2022: GDP per capita, life expectancy, and 
 
 df[["gdp_per_capita","life_expectancy","inflation_rate"]].describe()
 ```
-The @eda-summary reveal substantial cross-country variation in economic conditions. GDP per capita has a mean of about 20,346 USD but a much lower median of 7,588 USD, indicating strong right-skewness driven by high-income outliers and large dispersion.
+The summary statistics reveal substantial cross-country variation in economic conditions. GDP per capita has a mean of about 20,346 USD but a much lower median of 7,588 USD, indicating strong right-skewness driven by high-income outliers and large dispersion.
 
 Life expectancy is less variable, with a mean of 72.4 years and a relatively small standard deviation, suggesting more moderate differences across countries.
 
