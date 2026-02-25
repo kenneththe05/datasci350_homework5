@@ -221,53 +221,14 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<div id="cell-eda-correlation" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"gdp_per_capita"</span>,<span class="st">"life_expectancy"</span>,<span class="st">"inflation_rate"</span>]].corr()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="eda-correlation" class="cell-output cell-output-display" data-execution_count="3">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">gdp_per_capita</th>
-<th data-quarto-table-cell-role="th">life_expectancy</th>
-<th data-quarto-table-cell-role="th">inflation_rate</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">gdp_per_capita</th>
-<td>1.000000</td>
-<td>0.638609</td>
-<td>-0.169742</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">life_expectancy</th>
-<td>0.638609</td>
-<td>1.000000</td>
-<td>-0.111709</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">inflation_rate</th>
-<td>-0.169742</td>
-<td>-0.111709</td>
-<td>1.000000</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<p>The summary statistics show that GDP per capita is highly dispersed, with large variation across countries. Life expectancy varies within a narrower range, while inflation exhibits strong right-skewness due to several extreme outliers.</p>
-<p>The correlation matrix indicates a positive relationship between GDP per capita and life expectancy, suggesting that higher-income countries tend to experience better health outcomes. Inflation appears weakly related to the other two indicators.</p>
+<p>The <span class="citation" data-cites="eda-summary">(<a href="#ref-eda-summary" role="doc-biblioref"><strong>eda-summary?</strong></a>)</span> reveal substantial cross-country variation in economic conditions. GDP per capita has a mean of about 20,346 USD but a much lower median of 7,588 USD, indicating strong right-skewness driven by high-income outliers and large dispersion.</p>
+<p>Life expectancy is less variable, with a mean of 72.4 years and a relatively small standard deviation, suggesting more moderate differences across countries.</p>
+<p>Inflation exhibits the greatest volatility. Although the median rate is around 8 percent, extreme maximum values (above 170 percent) inflate both the mean and standard deviation, confirming the presence of severe outliers and macroeconomic instability in some countries.</p>
 </section>
 <section id="visualizing-key-relationships" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="visualizing-key-relationships"><span class="header-section-number">2</span> Visualizing Key Relationships</h2>
 <p>The following plots illustrate the patterns identified in the exploratory analysis.</p>
-<div id="cell-fig-development-health" class="cell" data-fig-label="fig-development-health" data-execution_count="4">
+<div id="cell-fig-development-health" class="cell" data-fig-label="fig-development-health" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div id="fig-development-health" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -281,7 +242,7 @@ Figure&nbsp;1: GDP per capita vs Life Expectancy, colored by measles immunisatio
 </div>
 </div>
 </div>
-<div id="cell-fig-inflation" class="cell" data-fig-label="fig-inflation" data-execution_count="5">
+<div id="cell-fig-inflation" class="cell" data-fig-label="fig-inflation" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div id="fig-inflation" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -295,34 +256,65 @@ Figure&nbsp;2: Distribution of inflation rates across countries (2022).
 </div>
 </div>
 </div>
-<p>Figure <a href="#fig-development-health" class="quarto-xref">Figure&nbsp;1</a> visually confirms the positive association between income and life expectancy identified in the correlation analysis.</p>
-<p>Figure <a href="#fig-inflation" class="quarto-xref">Figure&nbsp;2</a> illustrates the right-skewed distribution of inflation, consistent with the presence of extreme outliers observed in the summary statistics.</p>
+<p><a href="#fig-development-health" class="quarto-xref">Figure&nbsp;1</a> visually confirms the positive association between income and life expectancy identified in the correlation analysis.</p>
+<p><a href="#fig-inflation" class="quarto-xref">Figure&nbsp;2</a> illustrates the right-skewed distribution of inflation, consistent with the presence of extreme outliers observed in the summary statistics.</p>
 </section>
 <section id="summary-of-key-indicators" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="summary-of-key-indicators"><span class="header-section-number">3</span> Summary of Key Indicators</h2>
-<table class="caption-top table">
+<div class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"gdp_per_capita"</span>,<span class="st">"life_expectancy"</span>,<span class="st">"inflation_rate"</span>]] <span class="op">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  .agg([<span class="st">"mean"</span>,<span class="st">"median"</span>,<span class="st">"std"</span>]) <span class="op">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  .T <span class="op">\</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  .<span class="bu">round</span>(<span class="dv">2</span>) <span class="op">\</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  .set_axis([<span class="st">"Mean"</span>,<span class="st">"Median"</span>,<span class="st">"Std Dev"</span>], axis<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="tbl-key-stats" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="5">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-key-stats-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Key statistics for selected indicators (2022).
+</figcaption>
+<div aria-describedby="tbl-key-stats-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
-<th>Indicator</th>
-<th>Main Observation</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Mean</th>
+<th data-quarto-table-cell-role="th">Median</th>
+<th data-quarto-table-cell-role="th">Std Dev</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>GDP per capita</td>
-<td>Highly dispersed across countries</td>
+<th data-quarto-table-cell-role="th">gdp_per_capita</th>
+<td>20345.71</td>
+<td>7587.59</td>
+<td>31308.94</td>
 </tr>
 <tr class="even">
-<td>Life expectancy</td>
-<td>Positively associated with GDP</td>
+<th data-quarto-table-cell-role="th">life_expectancy</th>
+<td>72.42</td>
+<td>73.51</td>
+<td>7.71</td>
 </tr>
 <tr class="odd">
-<td>Inflation rate</td>
-<td>Right-skewed with extreme outliers</td>
+<th data-quarto-table-cell-role="th">inflation_rate</th>
+<td>12.49</td>
+<td>7.97</td>
+<td>19.68</td>
 </tr>
 </tbody>
 </table>
-<p>Table <strong>?@tbl-key-stats</strong> summarises the main statistical patterns identified in the exploratory analysis.</p>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p><a href="#tbl-key-stats" class="quarto-xref">Table&nbsp;1</a> reports the mean, median, and standard deviation for GDP per capita, life expectancy, and inflation rate in 2022. GDP per capita exhibits substantial dispersion, reflecting large differences in income levels across countries. Life expectancy shows comparatively lower variability, while inflation displays greater volatility, consistent with the presence of extreme values observed earlier. Overall, the table reinforces the unequal distribution of economic and macroeconomic conditions worldwide.</p>
 <p>The positive relationship between income and life expectancy is consistent with classic findings in the development literature <span class="citation" data-cites="preston1975">(<a href="#ref-preston1975" role="doc-biblioref">Preston 1975</a>)</span>.</p>
 </section>
 <section id="references" class="level2 unnumbered" data-number="4">

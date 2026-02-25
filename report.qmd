@@ -40,15 +40,11 @@ We focus on three key indicators for 2022: GDP per capita, life expectancy, and 
 
 df[["gdp_per_capita","life_expectancy","inflation_rate"]].describe()
 ```
-```{python}
-#| label: eda-correlation
-#| echo: true
+The @eda-summary reveal substantial cross-country variation in economic conditions. GDP per capita has a mean of about 20,346 USD but a much lower median of 7,588 USD, indicating strong right-skewness driven by high-income outliers and large dispersion.
 
-df[["gdp_per_capita","life_expectancy","inflation_rate"]].corr()
-```
-The summary statistics show that GDP per capita is highly dispersed, with large variation across countries. Life expectancy varies within a narrower range, while inflation exhibits strong right-skewness due to several extreme outliers.
+Life expectancy is less variable, with a mean of 72.4 years and a relatively small standard deviation, suggesting more moderate differences across countries.
 
-The correlation matrix indicates a positive relationship between GDP per capita and life expectancy, suggesting that higher-income countries tend to experience better health outcomes. Inflation appears weakly related to the other two indicators.
+Inflation exhibits the greatest volatility. Although the median rate is around 8 percent, extreme maximum values (above 170 percent) inflate both the mean and standard deviation, confirming the presence of severe outliers and macroeconomic instability in some countries.
 
 ## Visualizing Key Relationships
 
@@ -89,19 +85,25 @@ plt.title("Inflation Rate Distribution (2022)")
 plt.show()
 ```
 
-Figure @fig-development-health visually confirms the positive association between income and life expectancy identified in the correlation analysis. 
+@fig-development-health visually confirms the positive association between income and life expectancy identified in the correlation analysis. 
 
-Figure @fig-inflation illustrates the right-skewed distribution of inflation, consistent with the presence of extreme outliers observed in the summary statistics.
+@fig-inflation illustrates the right-skewed distribution of inflation, consistent with the presence of extreme outliers observed in the summary statistics.
 
 ## Summary of Key Indicators
 
-| Indicator          | Main Observation |
-|--------------------|------------------|
-| GDP per capita     | Highly dispersed across countries |
-| Life expectancy    | Positively associated with GDP |
-| Inflation rate     | Right-skewed with extreme outliers |
+```{python}
+#| label: tbl-key-stats
+#| tbl-cap: "Key statistics for selected indicators (2022)."
+#| echo: true
 
-Table @tbl-key-stats summarises the main statistical patterns identified in the exploratory analysis.
+df[["gdp_per_capita","life_expectancy","inflation_rate"]] \
+  .agg(["mean","median","std"]) \
+  .T \
+  .round(2) \
+  .set_axis(["Mean","Median","Std Dev"], axis=1)
+```
+
+@tbl-key-stats reports the mean, median, and standard deviation for GDP per capita, life expectancy, and inflation rate in 2022. GDP per capita exhibits substantial dispersion, reflecting large differences in income levels across countries. Life expectancy shows comparatively lower variability, while inflation displays greater volatility, consistent with the presence of extreme values observed earlier. Overall, the table reinforces the unequal distribution of economic and macroeconomic conditions worldwide.
 
 The positive relationship between income and life expectancy is consistent with classic findings in the development literature [@preston1975].
 
